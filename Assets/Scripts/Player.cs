@@ -32,17 +32,6 @@ public class Player : MonoBehaviour
         cam.transform.localRotation = Quaternion.Euler(xCameraRotation, 0, 0);
         transform.Rotate(new Vector3(0, xMouseRotate, 0));
 
-
-        /* transform.Rotate(new Vector3(0, yRotate, 0), Space.Self);
-        cam.transform.Rotate(new Vector3(xRotate, 0, 0), Space.Self);
-        cam.transform.localEulerAngles = new Vector3(cam.transform.localEulerAngles.x, 0, 0);
-
-        print(cam.transform.forward);
-
-        _moveDirection = Vector3.zero;
-        _moveDirection.x = Input.GetAxis("Horizontal");
-        _moveDirection.z = Input.GetAxis("Vertical"); */
-        
     }
 
     void FixedUpdate()
@@ -70,15 +59,5 @@ public class Player : MonoBehaviour
             hVelocity = Vector2.MoveTowards(hVelocity, Vector2.zero, friction * Time.fixedDeltaTime);
             rb.velocity = new Vector3(hVelocity.x, rb.velocity.y, hVelocity.y);
         }
-
-
-        /* float vY = rb.velocity.y;
-
-        if (_moveDirection != Vector3.zero)
-        {
-            rb.velocity = Vector3.MoveTowards(rb.velocity, _moveDirection * maxVelocity, acceleration * Time.fixedDeltaTime);
-        }
-
-        rb.velocity = new Vector3(rb.velocity.x, vY, rb.velocity.z); */
     }
 }

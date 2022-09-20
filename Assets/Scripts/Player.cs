@@ -13,7 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxVelocity = 5f;
 
     private Vector2 _moveDirection;
-    private float xCameraRotation;
+    private float _horizontalLookDirection;
+    private float _xCameraRotation;
+    private int _keys = 0;
     
     void Start()
     {
@@ -26,12 +28,13 @@ public class Player : MonoBehaviour
         float xMouseRotate = Input.GetAxisRaw("Mouse X") * mouseSensitivity * Time.deltaTime;
         float yMouseRotate = Input.GetAxisRaw("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        xCameraRotation -= yMouseRotate;
-        xCameraRotation = Mathf.Clamp(xCameraRotation, -90f, 90f);
+        _xCameraRotation -= yMouseRotate;
+        _xCameraRotation = Mathf.Clamp(_xCameraRotation, -90f, 90f);
 
-        cam.transform.localRotation = Quaternion.Euler(xCameraRotation, 0, 0);
-        transform.Rotate(new Vector3(0, xMouseRotate, 0));
+        cam.transform.localRotation = Quaternion.Euler(_xCameraRotation, 0, 0);
+        _horizontalLookDirection += xMouseRotate;
 
+        transform.rotation = Quaternion.Euler(0,_horizontalLookDirection,0);
     }
 
     void FixedUpdate()
@@ -59,5 +62,22 @@ public class Player : MonoBehaviour
             hVelocity = Vector2.MoveTowards(hVelocity, Vector2.zero, friction * Time.fixedDeltaTime);
             rb.velocity = new Vector3(hVelocity.x, rb.velocity.y, hVelocity.y);
         }
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag == "Key")
+        {
+            GameObject.Destroy(collider.gameObject);
+            _keys++;
+        }
+    }
+
+    public bool haveKey => _keys > 0 ? true : false;
+
+    public void ConsumeKey()
+    {
+        if (_keys > 0) 
+            _keys--;
     }
 }

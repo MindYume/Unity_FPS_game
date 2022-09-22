@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {   
@@ -8,7 +7,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject bullet;
 
     /// <summary> Speed of rotation </summary>
-    [SerializeField] private float rotationSpeed = Mathf.PI/2;
+    [SerializeField] private float rotationSpeed = Mathf.PI;
+
+    private Transform[] wayPoints;
+
+    private int wayPointNum = 0;
 
     /// <summary> Does the enemy see the player </summary>
     private bool _seePlayer = false;
@@ -19,8 +22,24 @@ public class Enemy : MonoBehaviour
     /// <summary> Delay before next attack </summary>
     private float _attackDelay = 1f;
 
-        /// <summary> Is enemy ready to attack </summary>
+    /// <summary> Is enemy ready to attack </summary>
     private bool _isReadyToAttack = true;
+
+    private NavMeshAgent navMeshAgent;
+
+
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
+    /// </summary>
+    void Start()
+    {
+
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        if ( wayPoints is not null && wayPoints.Length > 0)
+        {
+            navMeshAgent.destination = wayPoints[wayPointNum].position;
+        }
+    }
 
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled
@@ -37,6 +56,21 @@ public class Enemy : MonoBehaviour
            }
         }
 
+        if (wayPoints is not null && wayPoints.Length > 0)
+        {
+            if (Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination) < 0.1f)
+            {
+                if (wayPointNum < wayPoints.Length-1)
+                    wayPointNum++;
+                else
+                    wayPointNum = 0;
+
+                // print(wayPoints.Length-1);
+                navMeshAgent.destination = wayPoints[wayPointNum].position;
+            }
+
+        }
+
     }
 
     /// <summary>
@@ -49,6 +83,7 @@ public class Enemy : MonoBehaviour
             case "Player":
                 _seePlayer = true;
                 _playerPosition = other.gameObject.transform.position;
+                navMeshAgent.angularSpeed = 0;
                 break;
         }
     }
@@ -62,8 +97,14 @@ public class Enemy : MonoBehaviour
         {
             case "Player":
                 _seePlayer = false;
+                navMeshAgent.angularSpeed = 360;
                 break;
         }
+    }
+
+    public void SetPath(Transform[] wayPoints)
+    {
+        this.wayPoints = wayPoints;
     }
 
     /// <summary>
@@ -92,9 +133,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void SpawnBullet()
     {
-        Instantiate(bullet, transform.position + transform.forward + (new Vector3(0, 0.5f, 0)), Quaternion.LookRotation(transform.forward));
+        Instantiate(bullet, transform.position + transform.forward + (new Vector3(0, 1.5f, 0)), Quaternion.LookRotation(transform.forward));
         _isReadyToAttack = false;
         Invoke("SetReadyToAttack", _attackDelay);
     }
-
 }

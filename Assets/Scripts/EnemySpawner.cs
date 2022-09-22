@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Transform spawnPoint;
     [SerializeField] private GameObject enemy;
+    [SerializeField] private Transform[] wayPoints;
 
     void Start()
     {
-        Instantiate(enemy, spawnPoint.position + new Vector3(0, 1, 0), Quaternion.identity);
+        GameObject createdEnemy = Instantiate(enemy, transform.position, Quaternion.identity);
+        createdEnemy.GetComponent<Enemy>().SetPath(wayPoints);
     }
 
 }

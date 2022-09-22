@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -49,6 +47,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleCameraControl();
+        HandleMovementControl();
     }
 
     /// <summary>
@@ -56,7 +55,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {   
-        HandleMovementControl();
+        // HandleMovementControl();
     }
 
     /// <summary>

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Door : MonoBehaviour
@@ -21,11 +19,11 @@ public class Door : MonoBehaviour
     {
         if (_isOpen)
         {
-            movingPart.transform.localPosition = Vector3.MoveTowards(movingPart.transform.localPosition, Vector3.up * 4.5f, 3 * Time.deltaTime);
+            movingPart.transform.localPosition = Vector3.MoveTowards(movingPart.transform.localPosition, Vector3.up, 3 * Time.deltaTime);
         }
         else
         {
-            movingPart.transform.localPosition = Vector3.MoveTowards(movingPart.transform.localPosition, Vector3.up * 1.5f, 3 * Time.deltaTime);
+            movingPart.transform.localPosition = Vector3.MoveTowards(movingPart.transform.localPosition, Vector3.zero, 3 * Time.deltaTime);
         }
     }
 

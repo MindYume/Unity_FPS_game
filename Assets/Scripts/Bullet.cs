@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {   
-        GetComponent<Rigidbody>().velocity = transform.forward * 10;
+        GetComponent<Rigidbody>().velocity = transform.forward * 15;
 
         Invoke("DeleteBullet", _deleteTime);
     }

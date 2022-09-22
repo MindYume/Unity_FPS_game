@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236252185738081424}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.8, y: 1, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -93,9 +93,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2291460124065744042}
   - component: {fileID: 2291460124065744037}
-  - component: {fileID: 3137620372558541341}
   - component: {fileID: 4421992145187158204}
   - component: {fileID: 7279328110079953756}
+  - component: {fileID: 1119373639}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -128,20 +128,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2291460124065744038}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!136 &3137620372558541341
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2291460124065744038}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &4421992145187158204
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -153,7 +139,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7279328110079953756
 MonoBehaviour:
@@ -167,8 +153,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0268d96177177f54fbe7f3ce3a0df58b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 1.5707964
   bullet: {fileID: 5607677178216572214, guid: 9a82e1649f54a6545bf6f318c7370e9a, type: 3}
+  rotationSpeed: 3.14
+--- !u!195 &1119373639
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2291460124065744038}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 360
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7578151746654787276
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +203,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7578151746654787276}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.519, z: 0.265}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0.265}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []

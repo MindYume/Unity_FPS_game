@@ -8,24 +8,27 @@ public class Enemy : MonoBehaviour
 
     /// <summary> Speed of rotation </summary>
     [SerializeField] private float rotationSpeed = Mathf.PI;
-
+    
+    /// <summary> Waypoints between which the enemy will walk </summary>
     private Transform[] wayPoints;
 
-    private int wayPointNum = 0;
+    /// <summary> NavMeshAgent of the enemy </summary>
+    private NavMeshAgent navMeshAgent;
+
+    /// <summary> Position of the player </summary>
+    private Vector3 _playerPosition;
+
+    /// <summary> The number of the waypoint to which the enemy is currently following </summary>
+    private int _wayPointNum = 0;
 
     /// <summary> Does the enemy see the player </summary>
     private bool _seePlayer = false;
-    
-    /// <summary> Position of the player </summary>
-    private Vector3 _playerPosition;
 
     /// <summary> Delay before next attack </summary>
     private float _attackDelay = 1f;
 
     /// <summary> Is enemy ready to attack </summary>
     private bool _isReadyToAttack = true;
-
-    private NavMeshAgent navMeshAgent;
 
 
     /// <summary>
@@ -37,7 +40,7 @@ public class Enemy : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         if ( wayPoints is not null && wayPoints.Length > 0)
         {
-            navMeshAgent.destination = wayPoints[wayPointNum].position;
+            navMeshAgent.destination = wayPoints[_wayPointNum].position;
         }
     }
 
@@ -60,13 +63,13 @@ public class Enemy : MonoBehaviour
         {
             if (Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination) < 0.1f)
             {
-                if (wayPointNum < wayPoints.Length-1)
-                    wayPointNum++;
+                if (_wayPointNum < wayPoints.Length-1)
+                    _wayPointNum++;
                 else
-                    wayPointNum = 0;
+                    _wayPointNum = 0;
 
                 // print(wayPoints.Length-1);
-                navMeshAgent.destination = wayPoints[wayPointNum].position;
+                navMeshAgent.destination = wayPoints[_wayPointNum].position;
             }
 
         }
@@ -102,6 +105,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets a new path for the enemy
+    /// </summary>
+    /// <param name="wayPoints"> Waypoints between which the enemy will walk </param>
     public void SetPath(Transform[] wayPoints)
     {
         this.wayPoints = wayPoints;

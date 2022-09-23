@@ -14,7 +14,22 @@ public class Player : MonoBehaviour
     
     /// <summary> The speed the player will not exceed </summary>
     [SerializeField] private float standartVelocity = 5f;
+
+    /// <summary> Strength of jump </summary>
+    [SerializeField] private float jumpStrength = 5f;
     
+
+    /// <summary> Player's camera </summary>
+    private Camera cam;
+    
+    /// <summary> Player's RigidBody </summary>
+    private Rigidbody rb;
+
+    /// <summary> Collider that checks if the player is on the ground </summary>
+    private GroundCheck groundCheck;
+
+    /// <summary> Collider for collecting items </summary>
+    private ObjectPicker objectPicker;
 
     /// <summary> Camera direction </summary>
     private Vector2 _cameraLookDirection;
@@ -22,10 +37,6 @@ public class Player : MonoBehaviour
     /// <summary> Number of keys the player has </summary>
     private int _keys;
 
-    /// <summary> Player's camera </summary>
-    private Camera cam;
-    /// <summary> Player's RigidBody </summary>
-    private Rigidbody rb;
 
     #endregion
 
@@ -35,8 +46,12 @@ public class Player : MonoBehaviour
     /// </summary>
     void Start()
     {   
-        rb = GetComponent<Rigidbody>();
         cam = GetComponentInChildren<Camera>();
+        rb = GetComponent<Rigidbody>();
+        groundCheck = GetComponentInChildren<GroundCheck>();
+        objectPicker = GetComponentInChildren<ObjectPicker>();
+
+        objectPicker.triggerStay.AddListener(OnObjectPickerTriggerEnter);
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -48,6 +63,7 @@ public class Player : MonoBehaviour
     {
         HandleCameraControl();
         HandleMovementControl();
+        HandleJumpControl();
     }
 
     /// <summary>
@@ -65,12 +81,21 @@ public class Player : MonoBehaviour
     {
         switch(other.tag)
         {
-            case "Key":
-                PickKey(other.GetComponent<Key>());
-                break;
-            
             case "Door":
                 TryActivateDoor(other.GetComponent<Door>());
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Collider for collecting items
+    /// </summary>
+    private void OnObjectPickerTriggerEnter(Collider other)
+    {
+        switch(other.tag)
+        {
+            case "Key":
+                PickKey(other.GetComponent<Key>());
                 break;
         }
     }
@@ -127,6 +152,14 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, _cameraLookDirection.y, 0);
     }
 
+    void HandleJumpControl()
+    {
+        if (Input.GetKey(KeyCode.Space) && rb.velocity.y <= 0 && groundCheck.IsOnFloor)
+        {
+            rb.velocity = rb.velocity + Vector3.up * jumpStrength;
+        }
+    }
+
     /// <summary>
     /// Picks up a key. After picking up the key, object is removed, and the number of keys the player has increases
     /// </summary>
@@ -146,4 +179,5 @@ public class Player : MonoBehaviour
             _keys--;
         }
     }
+    
 }   

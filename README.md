@@ -8,6 +8,7 @@
 * Реализованы двери, которые открываются, только если у игрока есть ключ
 * Реализован прыжок
 
+![](github_images/Level1.png)
 ![](github_images/key.png)
 ![](github_images/screenshot.png)
 ![](github_images/level.png)

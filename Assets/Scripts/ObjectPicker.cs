@@ -10,6 +10,5 @@ public class ObjectPicker : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         triggerStay.Invoke(other);
-        print("test");
     }
 }

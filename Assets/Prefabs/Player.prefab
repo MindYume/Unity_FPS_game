@@ -138,10 +138,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bca1d0dcc6373848b1b65a05a6ba3ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 5607677178216572214, guid: 9a82e1649f54a6545bf6f318c7370e9a, type: 3}
   mouseSensitivity: 1000
   acceleration: 15
   friction: 15
   standartVelocity: 10
+  jumpStrength: 5
 --- !u!1 &1644334062660216008
 GameObject:
   m_ObjectHideFlags: 0

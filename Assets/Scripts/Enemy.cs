@@ -51,29 +51,13 @@ public class Enemy : MonoBehaviour
     {
         if (_seePlayer)
         {
-           RotateTowardsPlayer();
-
-           if (_isReadyToAttack)
-           {
-                SpawnBullet();
-           }
+            TryFollowPlayer();
+            TryArrackPlayer();
         }
-
-        if (wayPoints is not null && wayPoints.Length > 0)
+        else
         {
-            if (Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination) < 0.1f)
-            {
-                if (_wayPointNum < wayPoints.Length-1)
-                    _wayPointNum++;
-                else
-                    _wayPointNum = 0;
-
-                // print(wayPoints.Length-1);
-                navMeshAgent.destination = wayPoints[_wayPointNum].position;
-            }
-
+            TryFollowWaypoints();
         }
-
     }
 
     /// <summary>
@@ -86,7 +70,6 @@ public class Enemy : MonoBehaviour
             case "Player":
                 _seePlayer = true;
                 _playerPosition = other.gameObject.transform.position;
-                navMeshAgent.angularSpeed = 0;
                 break;
         }
     }
@@ -100,8 +83,50 @@ public class Enemy : MonoBehaviour
         {
             case "Player":
                 _seePlayer = false;
-                navMeshAgent.angularSpeed = 360;
                 break;
+        }
+    }
+
+    private void TryFollowPlayer()
+    {
+        navMeshAgent.angularSpeed = 0;
+
+        if (Vector3.Distance(transform.position, _playerPosition) <= 2f)
+        {
+            navMeshAgent.destination = transform.position;
+        }
+        else
+        {
+            navMeshAgent.destination = _playerPosition;
+        }
+    }
+    
+    private void TryFollowWaypoints()
+    {
+        navMeshAgent.angularSpeed = 360;
+        {
+            if (Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination) < 0.1f)
+            {
+                if (_wayPointNum < wayPoints.Length-1)
+                    _wayPointNum++;
+                else
+                    _wayPointNum = 0;
+
+                navMeshAgent.destination = wayPoints[_wayPointNum].position;
+            }
+        }
+    }
+
+    private void TryArrackPlayer()
+    {
+        if (_seePlayer)
+        {
+           RotateTowardsPlayer();
+
+           if (_isReadyToAttack)
+           {
+                SpawnBullet();
+           }
         }
     }
 

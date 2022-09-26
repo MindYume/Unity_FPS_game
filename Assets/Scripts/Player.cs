@@ -3,6 +3,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {  
     #region Private fields
+    [SerializeField] private GameObject bullet;
+
     /// <summary> Mouse sensitivity </summary>
     [SerializeField] private float mouseSensitivity = 100f;
 
@@ -64,6 +66,7 @@ public class Player : MonoBehaviour
         HandleCameraControl();
         HandleMovementControl();
         HandleJumpControl();
+        HandleAttackControl();
     }
 
     /// <summary>
@@ -152,11 +155,20 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, _cameraLookDirection.y, 0);
     }
 
-    void HandleJumpControl()
+    private void HandleJumpControl()
     {
         if (Input.GetKey(KeyCode.Space) && rb.velocity.y <= 0 && groundCheck.IsOnFloor)
         {
             rb.velocity = rb.velocity + Vector3.up * jumpStrength;
+        }
+    }
+
+    private void HandleAttackControl()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Instantiate(bullet, cam.transform.position + transform.forward, Quaternion.LookRotation(cam.transform.forward));
+            print("shoot");
         }
     }
 

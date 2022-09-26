@@ -11,14 +11,12 @@ public class GroundCheck : MonoBehaviour
         if (!other.isTrigger)
         {
             _isOnFloor = true;
-            print(_isOnFloor);
         }
     }
 
     void OnTriggerExit()
     {
         _isOnFloor = false;
-        print(_isOnFloor);
     }
 
     public bool IsOnFloor => _isOnFloor;

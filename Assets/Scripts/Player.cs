@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {  
-    #region Private fields
     [SerializeField] private GameObject bullet;
 
     /// <summary> Mouse sensitivity </summary>
@@ -18,9 +17,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float standartVelocity = 5f;
 
     /// <summary> Strength of jump </summary>
-    [SerializeField] private float jumpStrength = 5f;
+    [SerializeField] private float jumpStrength = 50f;
     
-
     /// <summary> Player's camera </summary>
     private Camera cam;
     
@@ -35,12 +33,12 @@ public class Player : MonoBehaviour
 
     /// <summary> Camera direction </summary>
     private Vector2 _cameraLookDirection;
+
+    /// <summary> Time in which the player can gain vertical velocity</summary>
+    private float _jumpTime;
     
     /// <summary> Number of keys the player has </summary>
     private int _keys;
-
-
-    #endregion
 
 
     /// <summary>
@@ -106,7 +104,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Returns true if the player has at least one key, false otherwise
     /// </summary>
-    public bool haveKey => _keys > 0 ? true : false;
+    public bool haveKey => _keys > 0;
 
     /// <summary>
     /// Changes the speed and direction of the player's movement after pressing WASD or the arrow keys.
@@ -155,20 +153,39 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, _cameraLookDirection.y, 0);
     }
 
+    /// <summary>
+    /// Changes the vertical speed of the player if the user pressed Space and the player is on the floor
+    /// </summary>
     private void HandleJumpControl()
     {
-        if (Input.GetKey(KeyCode.Space) && rb.velocity.y <= 0 && groundCheck.IsOnFloor)
+        if (Input.GetKey(KeyCode.Space))
         {
-            rb.velocity = rb.velocity + Vector3.up * jumpStrength;
+            if (rb.velocity.y <= 0 && groundCheck.IsOnFloor)
+            {
+                _jumpTime = 0.14f;
+            }
+
+            if (_jumpTime > 0)
+            {
+                rb.velocity = rb.velocity + Vector3.up * jumpStrength * Time.deltaTime;
+            }
         }
+        else
+        {
+            _jumpTime = 0f;
+        }
+
+        _jumpTime = _jumpTime > 0 ? _jumpTime - Time.deltaTime : 0;
     }
 
+    /// <summary>
+    /// Spawns a bullet in the direction the player is looking if the user clicks the left mouse button.
+    /// </summary>
     private void HandleAttackControl()
     {
         if (Input.GetMouseButtonDown(0))
         {
             Instantiate(bullet, cam.transform.position + transform.forward, Quaternion.LookRotation(cam.transform.forward));
-            print("shoot");
         }
     }
 

@@ -165,7 +165,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void SpawnBullet()
     {
-        Instantiate(bullet, transform.position + transform.forward + (new Vector3(0, 1.5f, 0)), Quaternion.LookRotation(transform.forward));
+        Bullet spawnedBullet = Instantiate(bullet, transform.position + transform.forward + (new Vector3(0, 1.5f, 0)), Quaternion.LookRotation(transform.forward)).GetComponent<Bullet>();
+        spawnedBullet.SetTarget("Player");
         _isReadyToAttack = false;
         Invoke("SetReadyToAttack", _attackDelay);
     }

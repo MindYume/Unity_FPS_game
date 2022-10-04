@@ -67,9 +67,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1644334061881523050}
+  - component: {fileID: 1644334061881523048}
+  - component: {fileID: 1783925214}
+  - component: {fileID: 6098526952339858929}
   - component: {fileID: 1644334061881523062}
   - component: {fileID: 1644334061881523049}
-  - component: {fileID: 1644334061881523048}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -96,6 +98,54 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1644334061881523048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644334061881523052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bca1d0dcc6373848b1b65a05a6ba3ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
+  bullet: {fileID: 5607677178216572214, guid: 9a82e1649f54a6545bf6f318c7370e9a, type: 3}
+--- !u!114 &1783925214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644334061881523052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84c53e0a21f098e4892e8c8db0140979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1644334061881523049}
+  acceleration: 50
+  friction: 50
+  standartVelocity: 8
+  mouseSensitivity: 800
+  jumpStrength: 50
+--- !u!136 &6098526952339858929
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644334061881523052}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.26
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &1644334061881523062
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -126,24 +176,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &1644334061881523048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644334061881523052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bca1d0dcc6373848b1b65a05a6ba3ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 5607677178216572214, guid: 9a82e1649f54a6545bf6f318c7370e9a, type: 3}
-  mouseSensitivity: 1000
-  acceleration: 15
-  friction: 15
-  standartVelocity: 10
-  jumpStrength: 5
 --- !u!1 &1644334062660216008
 GameObject:
   m_ObjectHideFlags: 0

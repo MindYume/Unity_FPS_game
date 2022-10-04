@@ -11,6 +11,7 @@ public class WinPoint : MonoBehaviour
         if (other.tag == "Player")
         {
             onTriggerEnter.Invoke();
+            SceneLoader.Load("Level_2");
         }
     }
 }
